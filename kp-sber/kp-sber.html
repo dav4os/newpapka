@@ -161,6 +161,8 @@
   .unit { flex: 0 0 auto; text-align: right; background: var(--night); color: #fff; padding: 3.5mm 5mm; border-radius: 14px; }
   .unit .a { font-size: 8.5px; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.55); font-weight: 700; }
   .unit .b { margin-top: 1mm; font-family: 'Unbounded', sans-serif; font-size: 14px; font-weight: 600; }
+  .unit .b sup { font-size: 9px; color: var(--green-2); margin-left: .5mm; }
+  .unit .c { margin-top: 1mm; font-size: 9px; font-weight: 600; color: rgba(255,255,255,.6); }
 
   .vendor { margin-top: 3.5mm; background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
   .vendor-h { display: flex; align-items: center; justify-content: space-between; padding: 2.6mm 5mm; border-bottom: 1px solid var(--line); }
@@ -276,7 +278,7 @@
       </div>
       <div class="kpi">
         <div class="v">1 000</div>
-        <div class="l">токенов — единица тарификации,<br>цены фиксированы в ₽</div>
+        <div class="l">токенов — единица тарификации,<br>цены в российских рублях</div>
       </div>
     </div>
 
@@ -380,7 +382,7 @@
         <span class="tag">● Персональный прайс · 1 / 2</span>
         <h2>Персональные цены<br>для ОАО&nbsp;«Сбер&nbsp;Банк»</h2>
       </div>
-      <div class="unit"><div class="a">Тарификация</div><div class="b">₽ за 1 000 токенов</div></div>
+      <div class="unit"><div class="a">Тарификация</div><div class="b">₽<sup>*</sup> за 1 000 токенов</div><div class="c">* российские рубли (RUB)</div></div>
     </div>
     <div id="vendors-a"></div>
   </div>
@@ -399,10 +401,10 @@
         <span class="tag">● Персональный прайс · 2 / 2</span>
         <h2>OpenAI и медиа-модели</h2>
       </div>
-      <div class="unit"><div class="a">Тарификация</div><div class="b">₽ за 1 000 токенов</div></div>
+      <div class="unit"><div class="a">Тарификация</div><div class="b">₽<sup>*</sup> за 1 000 токенов</div><div class="c">* российские рубли (RUB)</div></div>
     </div>
     <div id="vendors-b"></div>
-    <div class="note"><span class="star">*</span><span>Текстовые модели тарифицируются в рублях за 1 000 токенов (вх. — входящие, исх. — исходящие). Медиа-модели — за одну генерацию: видео 10 секунд в указанном разрешении или одно изображение. Персональные цены действуют для ОАО «Сбер Банк» и рассчитаны исходя из прогнозного объёма потребления около 700 000 ₽ в месяц.</span></div>
+    <div class="note"><span class="star">*</span><span>Все цены указаны в <b>российских рублях (RUB)</b>. Текстовые модели тарифицируются за 1 000 токенов (вх. — входящие, исх. — исходящие). Медиа-модели — за одну генерацию: видео 10 секунд в указанном разрешении или одно изображение. Персональные цены действуют для ОАО «Сбер Банк» и рассчитаны исходя из прогнозного объёма потребления около 700 000 ₽ в месяц.</span></div>
   </div>
   <div class="foot"><span class="conf">Конфиденциально · подготовлено для ОАО «Сбер Банк»</span><span>gptunnel.ru · 04</span></div>
 </section>
