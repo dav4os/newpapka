@@ -263,14 +263,14 @@
         <span class="for">для <span class="grad-text accent-u">ОАО «Сбер Банк»</span></span>
       </h1>
       <p class="lead">
-        Мы подготовили <b>персональный прайс</b> специально для команды Сбера: 29 моделей — Claude, GPT, DeepSeek, Perplexity, Kling и Nano Banana — по ценам ниже базовых <b>до 54%</b>. Прозрачная тарификация <b>за каждые 1 000 токенов</b>, оплата только за фактическое использование.
+        В GPTunneL нет подписок: у нас одна стандартная тарификация для всех клиентов — оплата <b>за каждые 1&nbsp;000 токенов</b>, только за фактическое использование. Для команды Сбера мы сделали <b>персональную скидку до&nbsp;54%</b> от стандартного прайса на 29 моделей — Claude, GPT, DeepSeek, Perplexity, Kling и Nano Banana.
       </p>
     </div>
 
     <div class="kpis">
       <div class="kpi hl">
         <div class="v">до 54<small>%</small></div>
-        <div class="l">персональная скидка<br>от базового прайса</div>
+        <div class="l">персональная скидка<br>от стандартного прайса</div>
       </div>
       <div class="kpi">
         <div class="v">29</div>
@@ -300,7 +300,7 @@
 
     <div style="margin-top:6mm"><span class="tag green">● Как устроена тарификация</span></div>
     <h2>Платите только за то,<br>что реально использовали</h2>
-    <p class="sub">Без подписок, абонентских плат и лимитов на сотрудников. Ниже — как читать цены в прайсе.</p>
+    <p class="sub">Никаких подписок и абонентских плат — только оплата за токены. Ниже — как читать цены в прайсе.</p>
 
     <div class="explain">
       <div class="card xs">
@@ -348,7 +348,7 @@
         <div class="rc total">
           <div class="rk">Итого за запрос</div>
           <div class="big">3,93 ₽</div>
-          <div class="rm"><span class="strike">8,40 ₽</span> по базовому прайсу</div>
+          <div class="rm"><span class="strike">8,40 ₽</span> по стандартному прайсу</div>
           <div><span class="save">−53% для Сбера</span></div>
         </div>
       </div>
@@ -465,7 +465,7 @@
 </section>
 
 <script>
-// Источник: «GPTunneL — Калькулятор скидок», 02.10.2026. [имя, id, базовая вх., базовая исх., скидка вх., скидка исх., цена вх., цена исх.]
+// Источник: «GPTunneL — Калькулятор скидок», 02.10.2026. [имя, id, стандартная вх., стандартная исх., скидка вх., скидка исх., цена вх., цена исх.]
 const V = {
   anthropic: { name: 'Anthropic · Claude', badge: 'A', color: '#D97757', rows: [
     ['Claude Fable 5',   'claude-fable-5',   '2,00', '10,00', 22.3, 22.3, '1,5539', '7,7692'],
@@ -501,7 +501,7 @@ const V = {
     ['Sonar',               'perplexity-sonar',               '0,30', '0,30', 38.6, 38.6, '0,1842', '0,1842'],
   ]},
 };
-// [имя, id, формат, базовая цена, скидка, ваша цена] — за одну генерацию
+// [имя, id, формат, стандартная цена, скидка, ваша цена] — за одну генерацию
 const MEDIA = { name: 'Видео и изображения', badge: '▶', color: '#6C5CFF', rows: [
   ['Kling v3',            'kling-v3-720P-10s',       'видео 720p · 10 с',  '336,00', 0,    '336,00'],
   ['Kling v2.6',          'kling-v2-6-1080P-10s',    'видео 1080p · 10 с', '142,00', 34.5, '93,00'],
@@ -528,7 +528,7 @@ function vendorHtml(v) {
   return `<div class="vendor">
     <div class="vendor-h"><div class="nm"><span class="badge" style="background:${v.color}">${v.badge}</span>${v.name}</div>
       <div><span class="cnt">${v.rows.length} ${plural(v.rows.length)}</span><span class="mx">до −${pct(max)}</span></div></div>
-    <table><thead><tr><th>Модель</th><th>Базовая цена, ₽</th><th>Скидка</th><th class="you">Цена для Сбера, ₽</th></tr></thead>
+    <table><thead><tr><th>Модель</th><th>Стандартная цена, ₽</th><th>Скидка</th><th class="you">Цена для Сбера, ₽</th></tr></thead>
     <tbody>${rows}</tbody></table></div>`;
 }
 function mediaHtml(v) {
@@ -543,7 +543,7 @@ function mediaHtml(v) {
   return `<div class="vendor">
     <div class="vendor-h"><div class="nm"><span class="badge" style="background:${v.color}">${v.badge}</span>${v.name}</div>
       <div><span class="cnt">₽ за генерацию</span><span class="mx">до −${pct(max)}</span></div></div>
-    <table><thead><tr><th>Модель</th><th>Формат</th><th>Базовая, ₽</th><th>Скидка</th><th class="you">Для Сбера, ₽</th></tr></thead>
+    <table><thead><tr><th>Модель</th><th>Формат</th><th>Стандартная, ₽</th><th>Скидка</th><th class="you">Для Сбера, ₽</th></tr></thead>
     <tbody>${rows}</tbody></table></div>`;
 }
 function plural(n) { const m10 = n % 10, m100 = n % 100; if (m10 === 1 && m100 !== 11) return 'модель'; if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return 'модели'; return 'моделей'; }
