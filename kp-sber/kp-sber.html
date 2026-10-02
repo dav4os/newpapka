@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>GPTunneL × Сбер — персональное КП</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+  @page { size: A4; margin: 0; }
+  :root {
+    --ink: #0E0E1A;
+    --ink-2: #4A4A60;
+    --ink-3: #8A8AA0;
+    --line: #E7E7F0;
+    --bg: #F4F4F8;
+    --card: #FFFFFF;
+    --violet: #6C5CFF;
+    --violet-2: #9A8CFF;
+    --violet-soft: #EEEBFF;
+    --green: #21A038;
+    --green-2: #3DDC84;
+    --green-soft: #E6F6EA;
+    --night: #0A0A14;
+    --grad: linear-gradient(100deg, #21A038 0%, #19B5A5 45%, #6C5CFF 100%);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #D9D9E3; }
+  body {
+    font-family: 'Manrope', sans-serif;
+    color: var(--ink);
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    font-feature-settings: "tnum" 1, "lnum" 1;
+  }
+  .page {
+    width: 210mm; height: 297mm;
+    position: relative; overflow: hidden;
+    background: var(--bg);
+    page-break-after: always; break-after: page;
+    margin: 0 auto;
+  }
+  .page:last-child { page-break-after: auto; break-after: auto; }
+  @media screen { .page { margin: 12px auto; box-shadow: 0 10px 40px rgba(0,0,0,.15); } }
+
+  .display { font-family: 'Unbounded', 'Manrope', sans-serif; letter-spacing: -0.02em; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  .grad-text { color: var(--green-2); }
+  .accent-u { position: relative; display: inline-block; }
+  .accent-u::after { content: ""; position: absolute; left: 0; right: 0; bottom: -2.2mm; height: 1.4mm; border-radius: 2mm; background: var(--grad); }
+  .step .no.grad-text { color: var(--violet-2); }
+
+  /* ---------- logo ---------- */
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 13px; letter-spacing: .01em; }
+  .brand svg { display: block; }
+  .x { opacity: .45; font-weight: 500; margin: 0 2px; }
+  .sber-mark { display: inline-flex; align-items: center; gap: 7px; }
+  .sber-dot { width: 14px; height: 14px; border-radius: 50%; background: conic-gradient(from 200deg, #21A038, #3DDC84, #19B5A5, #21A038); box-shadow: 0 0 0 3px rgba(33,160,56,.15); }
+
+  /* ---------- COVER ---------- */
+  .cover { background: var(--night); color: #fff; }
+  .cover .glow { position: absolute; border-radius: 50%; filter: blur(70px); }
+  .cover .g1 { width: 120mm; height: 120mm; background: #6C5CFF; opacity: .55; top: -30mm; right: -35mm; }
+  .cover .g2 { width: 110mm; height: 110mm; background: #21A038; opacity: .45; bottom: 40mm; left: -45mm; }
+  .cover .g3 { width: 70mm; height: 70mm; background: #19B5A5; opacity: .35; top: 95mm; left: 90mm; }
+  .cover .gridbg {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
+    background-size: 10mm 10mm;
+    mask-image: radial-gradient(ellipse at 60% 35%, #000 20%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse at 60% 35%, #000 20%, transparent 75%);
+  }
+  .cover .inner { position: relative; z-index: 2; padding: 16mm 16mm; height: 100%; display: flex; flex-direction: column; }
+  .cover-top { display: flex; justify-content: space-between; align-items: center; }
+  .pill { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border-radius: 999px; font-size: 11px; font-weight: 600; }
+  .pill.glass { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); color: rgba(255,255,255,.85); backdrop-filter: blur(6px); }
+  .pill .live { width: 7px; height: 7px; border-radius: 50%; background: var(--green-2); box-shadow: 0 0 0 4px rgba(61,220,132,.2); }
+
+  .cover-hero { margin-top: 30mm; }
+  .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: rgba(255,255,255,.55); margin-bottom: 7mm; display: flex; align-items: center; gap: 10px; }
+  .eyebrow::before { content: ""; width: 26px; height: 2px; background: var(--grad); border-radius: 2px; }
+  .cover h1 { font-size: 40px; line-height: 1.08; font-weight: 600; }
+  .cover h1 .for { display: block; margin-top: 4mm; font-size: 40px; }
+  .cover .lead { margin-top: 9mm; max-width: 140mm; font-size: 15px; line-height: 1.6; color: rgba(255,255,255,.72); }
+  .cover .lead b { color: #fff; font-weight: 700; }
+
+  .kpis { margin-top: auto; display: grid; grid-template-columns: 1.15fr 1fr 1fr; gap: 4mm; }
+  .kpi { border-radius: 16px; padding: 6mm 5.5mm; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); }
+  .kpi.hl { background: linear-gradient(140deg, rgba(33,160,56,.35), rgba(108,92,255,.35)); border-color: rgba(255,255,255,.22); }
+  .kpi .v { font-family: 'Unbounded', sans-serif; font-size: 30px; font-weight: 600; letter-spacing: -0.03em; line-height: 1; }
+  .kpi .v small { font-size: 15px; font-weight: 500; opacity: .8; margin-left: 2px; }
+  .kpi .l { margin-top: 3mm; font-size: 11.5px; line-height: 1.45; color: rgba(255,255,255,.7); }
+
+  .cover-foot { margin-top: 9mm; padding-top: 6mm; border-top: 1px solid rgba(255,255,255,.12); display: grid; grid-template-columns: repeat(3, 1fr); gap: 6mm; font-size: 11px; }
+  .cover-foot .k { color: rgba(255,255,255,.45); text-transform: uppercase; letter-spacing: .14em; font-size: 9px; font-weight: 700; margin-bottom: 2mm; }
+  .cover-foot .val { color: #fff; font-weight: 600; font-size: 12.5px; }
+
+  /* ---------- INNER PAGES ---------- */
+  .inner-page .content { padding: 12mm 14mm 0; }
+  .head { display: flex; justify-content: space-between; align-items: center; padding-bottom: 5mm; border-bottom: 1px solid var(--line); }
+  .head .meta { font-size: 10px; color: var(--ink-3); font-weight: 600; letter-spacing: .04em; }
+  .foot { position: absolute; left: 14mm; right: 14mm; bottom: 9mm; display: flex; justify-content: space-between; font-size: 9px; color: var(--ink-3); font-weight: 600; letter-spacing: .03em; }
+  .foot .conf { display: flex; align-items: center; gap: 6px; }
+  .foot .conf::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+
+  .tag { display: inline-flex; align-items: center; gap: 7px; padding: 5px 11px; border-radius: 999px; background: var(--violet-soft); color: var(--violet); font-size: 10px; font-weight: 700; letter-spacing: .04em; }
+  .tag.green { background: var(--green-soft); color: var(--green); }
+  h2 { font-family: 'Unbounded', sans-serif; font-size: 25px; line-height: 1.18; font-weight: 600; letter-spacing: -0.025em; margin-top: 4mm; }
+  .sub { margin-top: 3.5mm; font-size: 12.5px; line-height: 1.6; color: var(--ink-2); max-width: 165mm; }
+
+  /* tariff explainer */
+  .tariff { margin-top: 8mm; display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+  .card { background: var(--card); border-radius: 16px; padding: 6mm; border: 1px solid var(--line); }
+  .flow { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 24px 0.9fr 24px 1fr; align-items: center; gap: 0; padding: 6mm; }
+  .node { border-radius: 14px; padding: 4.5mm; }
+  .node.in { background: var(--green-soft); }
+  .node.model { background: var(--night); color: #fff; text-align: center; }
+  .node.out { background: var(--violet-soft); }
+  .node .t { font-size: 9.5px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+  .node.in .t { color: var(--green); }
+  .node.out .t { color: var(--violet); }
+  .node.model .t { color: rgba(255,255,255,.6); }
+  .node .d { margin-top: 2mm; font-size: 11px; line-height: 1.45; color: var(--ink-2); }
+  .node.model .d { color: #fff; font-weight: 700; font-size: 13px; }
+  .arrow { text-align: center; color: var(--ink-3); font-size: 16px; }
+
+  .formula { display: flex; flex-direction: column; justify-content: space-between; }
+  .formula .f { margin-top: 4mm; font-family: 'JetBrains Mono', monospace; font-size: 11px; line-height: 1.7; background: var(--bg); border-radius: 10px; padding: 4mm; color: var(--ink); }
+  .formula .f .c1 { color: var(--green); font-weight: 600; }
+  .formula .f .c2 { color: var(--violet); font-weight: 600; }
+  .card h3 { font-size: 14px; font-weight: 800; }
+  .card p.s { margin-top: 2mm; font-size: 11px; line-height: 1.5; color: var(--ink-2); }
+
+  .example { background: var(--night); color: #fff; border: none; position: relative; overflow: hidden; }
+  .example::after { content: ""; position: absolute; width: 60mm; height: 60mm; right: -20mm; top: -25mm; background: #6C5CFF; filter: blur(40px); opacity: .45; border-radius: 50%; }
+  .example > * { position: relative; z-index: 1; }
+  .example h3 { color: #fff; }
+  .example p.s { color: rgba(255,255,255,.65); }
+  .ex-rows { margin-top: 4mm; font-size: 11px; }
+  .ex-row { display: flex; justify-content: space-between; padding: 2mm 0; border-bottom: 1px dashed rgba(255,255,255,.14); color: rgba(255,255,255,.8); }
+  .ex-row b { color: #fff; }
+  .ex-row .strike { text-decoration: line-through; color: rgba(255,255,255,.45); }
+  .ex-total { margin-top: 3.5mm; display: flex; align-items: baseline; justify-content: space-between; }
+  .ex-total .big { font-family: 'Unbounded', sans-serif; font-size: 24px; font-weight: 600; }
+  .ex-total .save { padding: 4px 10px; border-radius: 999px; background: rgba(61,220,132,.18); color: var(--green-2); font-weight: 800; font-size: 11px; }
+
+  .features { margin-top: 8mm; }
+  .features .ttl { font-size: 10px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 4mm; }
+  .fgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3mm; }
+  .feat { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 4.5mm; display: flex; gap: 3.5mm; align-items: flex-start; }
+  .ico { flex: 0 0 auto; width: 9mm; height: 9mm; border-radius: 10px; display: grid; place-items: center; background: var(--violet-soft); color: var(--violet); }
+  .ico.g { background: var(--green-soft); color: var(--green); }
+  .feat .n { font-size: 12px; font-weight: 800; }
+  .feat .d { margin-top: 1mm; font-size: 10px; line-height: 1.45; color: var(--ink-2); }
+
+  /* ---------- PRICE TABLES ---------- */
+  .price-intro { display: flex; justify-content: space-between; align-items: flex-end; gap: 8mm; margin-top: 5mm; }
+  .price-intro h2 { margin-top: 2.5mm; font-size: 20px; }
+  .unit { flex: 0 0 auto; text-align: right; background: var(--night); color: #fff; padding: 3.5mm 5mm; border-radius: 14px; }
+  .unit .a { font-size: 8.5px; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.55); font-weight: 700; }
+  .unit .b { margin-top: 1mm; font-family: 'Unbounded', sans-serif; font-size: 14px; font-weight: 600; }
+
+  .vendor { margin-top: 4mm; background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+  .vendor-h { display: flex; align-items: center; justify-content: space-between; padding: 2.6mm 5mm; border-bottom: 1px solid var(--line); }
+  .vendor-h .nm { display: flex; align-items: center; gap: 3mm; font-weight: 800; font-size: 13.5px; }
+  .vendor-h .badge { width: 7.5mm; height: 7.5mm; border-radius: 8px; display: grid; place-items: center; color: #fff; font-weight: 800; font-size: 11px; font-family: 'Unbounded', sans-serif; }
+  .vendor-h .cnt { font-size: 10px; font-weight: 700; color: var(--ink-3); }
+  .vendor-h .mx { font-size: 10px; font-weight: 800; color: var(--green); background: var(--green-soft); padding: 4px 9px; border-radius: 999px; margin-left: 2mm; }
+
+  table { width: 100%; border-collapse: collapse; }
+  thead th { font-size: 8.5px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); text-align: right; padding: 2mm 5mm 1.8mm; background: #FAFAFD; border-bottom: 1px solid var(--line); }
+  thead th:first-child { text-align: left; }
+  thead th.you { color: var(--green); }
+  tbody td { line-height: 1.22; padding: 1.25mm 5mm; border-bottom: 1px solid #F0F0F5; font-size: 11px; text-align: right; vertical-align: middle; white-space: nowrap; }
+  tbody tr:last-child td { border-bottom: none; }
+  td.m { text-align: left; }
+  td.m .mn { font-weight: 800; font-size: 11.5px; }
+  td.m .id { font-family: 'JetBrains Mono', monospace; font-size: 8.5px; color: var(--ink-3); margin-top: .3mm; }
+  .pair { display: inline-grid; grid-template-columns: auto auto; column-gap: 2.2mm; row-gap: 0; align-items: baseline; }
+  .pair .lb { font-size: 8.5px; color: var(--ink-3); font-weight: 700; text-align: left; }
+  .pair .vl { text-align: right; }
+  td.base .vl { color: var(--ink-3); text-decoration: line-through; text-decoration-color: rgba(138,138,160,.6); }
+  td.you { background: linear-gradient(90deg, rgba(33,160,56,.0), rgba(33,160,56,.06)); }
+  td.you .vl { font-weight: 800; color: var(--ink); font-size: 11.5px; }
+  td.disc { width: 34mm; }
+  .dbar { display: flex; align-items: center; justify-content: flex-end; gap: 2.5mm; }
+  .dbar .track { width: 15mm; height: 5px; border-radius: 4px; background: #EEEEF4; overflow: hidden; }
+  .dbar .fill { height: 100%; border-radius: 4px; background: var(--grad); }
+  .dbar .pct { font-weight: 800; font-size: 11px; color: var(--green); min-width: 11mm; text-align: right; }
+  .dbar .pct.zero { color: var(--ink-3); }
+  .dsplit { display: block; font-size: 8.5px; color: var(--ink-3); font-weight: 700; margin-top: .6mm; }
+  td.unit-c { font-size: 9.5px; color: var(--ink-3); font-weight: 700; }
+
+  .note { margin-top: 4mm; display: flex; gap: 3mm; font-size: 9.5px; line-height: 1.55; color: var(--ink-2); }
+  .note .star { color: var(--violet); font-weight: 800; }
+
+  /* ---------- FINAL ---------- */
+  .final { background: var(--night); color: #fff; }
+  .final .inner { position: relative; z-index: 2; padding: 16mm; height: 100%; display: flex; flex-direction: column; }
+  .final .glow { position: absolute; border-radius: 50%; filter: blur(70px); }
+  .final .g1 { width: 120mm; height: 120mm; background: #21A038; opacity: .4; top: -40mm; left: -30mm; }
+  .final .g2 { width: 120mm; height: 120mm; background: #6C5CFF; opacity: .5; bottom: -30mm; right: -40mm; }
+  .final h2 { color: #fff; font-size: 30px; margin-top: 6mm; }
+  .final .sub { color: rgba(255,255,255,.7); font-size: 13px; }
+  .custom { margin-top: 10mm; border-radius: 20px; padding: 7mm; background: linear-gradient(135deg, rgba(33,160,56,.28), rgba(108,92,255,.32)); border: 1px solid rgba(255,255,255,.18); display: grid; grid-template-columns: 1fr auto; gap: 6mm; align-items: center; }
+  .custom .t { font-family: 'Unbounded', sans-serif; font-size: 17px; font-weight: 600; line-height: 1.3; }
+  .custom .d { margin-top: 2.5mm; font-size: 11.5px; line-height: 1.6; color: rgba(255,255,255,.78); }
+  .custom .plus { width: 22mm; height: 22mm; border-radius: 18px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); display: grid; place-items: center; font-family: 'Unbounded', sans-serif; font-size: 34px; font-weight: 500; }
+
+  .steps { margin-top: 8mm; display: grid; grid-template-columns: repeat(4, 1fr); gap: 3mm; }
+  .step { border-radius: 14px; padding: 4.5mm; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); }
+  .step .no { font-family: 'Unbounded', sans-serif; font-size: 12px; font-weight: 600; }
+  .step .n { margin-top: 3mm; font-size: 11.5px; font-weight: 800; }
+  .step .d { margin-top: 1.2mm; font-size: 9.5px; line-height: 1.45; color: rgba(255,255,255,.6); }
+
+  .terms { margin-top: 6mm; display: flex; flex-wrap: wrap; gap: 2.5mm; }
+  .terms .pill { font-size: 10.5px; }
+
+  .contact { margin-top: auto; background: #fff; color: var(--ink); border-radius: 20px; padding: 7mm; display: grid; grid-template-columns: auto 1fr; gap: 6mm; align-items: center; }
+  .avatar { width: 24mm; height: 24mm; border-radius: 50%; background: var(--grad); display: grid; place-items: center; color: #fff; font-family: 'Unbounded', sans-serif; font-size: 22px; font-weight: 600; box-shadow: 0 0 0 4px #fff, 0 0 0 5px var(--line); }
+  .contact .who .nm { font-family: 'Unbounded', sans-serif; font-size: 19px; font-weight: 600; letter-spacing: -0.02em; }
+  .contact .who .role { margin-top: 1mm; font-size: 11px; font-weight: 700; color: var(--violet); letter-spacing: .04em; }
+  .cgrid { margin-top: 4.5mm; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2.5mm; }
+  .cgrid a { text-decoration: none; color: var(--ink); background: var(--bg); border-radius: 12px; padding: 3mm 3.5mm; display: block; }
+  .cgrid .k { font-size: 8.5px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); }
+  .cgrid .v { margin-top: 1mm; font-size: 11.5px; font-weight: 800; white-space: nowrap; }
+  .final-foot { margin-top: 6mm; display: flex; justify-content: space-between; font-size: 9.5px; color: rgba(255,255,255,.45); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<!-- reusable logo -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="gt-logo" viewBox="0 0 34 24">
+      <path d="M10.3 2.6a2.4 2.4 0 0 1 4.2 0l8.4 16.2a2.4 2.4 0 0 1-2.1 3.5H4a2.4 2.4 0 0 1-2.1-3.5z" fill="currentColor"/>
+      <rect x="25.5" y="1.6" width="6.2" height="20.8" rx="2.6" fill="currentColor"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ================= PAGE 1 · COVER ================= -->
+<section class="page cover">
+  <div class="glow g1"></div><div class="glow g2"></div><div class="glow g3"></div>
+  <div class="gridbg"></div>
+  <div class="inner">
+    <div class="cover-top">
+      <div class="brand" style="color:#fff">
+        <svg width="30" height="21" style="color:#8B7BFF"><use href="#gt-logo"/></svg>
+        GPTunneL · Business <span class="x">×</span>
+        <span class="sber-mark"><span class="sber-dot"></span>Сбер</span>
+      </div>
+      <span class="pill glass"><span class="live"></span>Персональные условия</span>
+    </div>
+
+    <div class="cover-hero">
+      <div class="eyebrow">Коммерческое предложение</div>
+      <h1 class="display">Корпоративный доступ<br>к ведущим AI-моделям
+        <span class="for">для <span class="grad-text accent-u">ПАО Сбербанк</span></span>
+      </h1>
+      <p class="lead">
+        Мы подготовили <b>персональный прайс</b> специально для команды Сбера: 29 моделей — Claude, GPT, DeepSeek, Perplexity, Kling и Nano Banana — по ценам ниже базовых <b>до 54%</b>. Прозрачная тарификация <b>за каждые 1 000 токенов</b>, оплата только за фактическое использование.
+      </p>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi hl">
+        <div class="v">до 54<small>%</small></div>
+        <div class="l">персональная скидка<br>от базового прайса</div>
+      </div>
+      <div class="kpi">
+        <div class="v">29</div>
+        <div class="l">моделей в персональном<br>прайсе — и добавим любые ещё</div>
+      </div>
+      <div class="kpi">
+        <div class="v">1 000</div>
+        <div class="l">токенов — единица тарификации,<br>цены в ₽ без пересчёта валют</div>
+      </div>
+    </div>
+
+    <div class="cover-foot">
+      <div><div class="k">Подготовлено для</div><div class="val">ПАО Сбербанк</div></div>
+      <div><div class="k">Дата</div><div class="val">2 октября 2026</div></div>
+      <div><div class="k">Ваш менеджер</div><div class="val">Дмитрий Папуш</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PAGE 2 · TARIFF + PLATFORM ================= -->
+<section class="page inner-page">
+  <div class="content">
+    <div class="head">
+      <div class="brand"><svg width="26" height="18" style="color:var(--violet)"><use href="#gt-logo"/></svg>GPTunneL <span class="x">×</span><span class="sber-mark"><span class="sber-dot"></span>Сбер</span></div>
+      <div class="meta">Персональное КП · ПАО Сбербанк</div>
+    </div>
+
+    <div style="margin-top:8mm"><span class="tag green">● Как устроена тарификация</span></div>
+    <h2>Платите только за токены,<br>а не за подписки и лицензии</h2>
+    <p class="sub">Все цены для текстовых моделей указаны в рублях <b>за 1 000 токенов</b> — отдельно за входящие (ваш запрос и контекст) и исходящие (ответ модели). Никаких абонентских плат, лимитов на число сотрудников и платы за подключение.</p>
+
+    <div class="tariff">
+      <div class="card flow">
+        <div class="node in"><div class="t">Вход · вх.</div><div class="d">Запрос сотрудника, документы, история диалога, системные инструкции</div></div>
+        <div class="arrow">→</div>
+        <div class="node model"><div class="t">Модель</div><div class="d">Claude · GPT · DeepSeek · Sonar</div></div>
+        <div class="arrow">→</div>
+        <div class="node out"><div class="t">Выход · исх.</div><div class="d">Ответ модели: текст, код, анализ, резюме документа</div></div>
+      </div>
+
+      <div class="card formula">
+        <div>
+          <h3>Формула расчёта</h3>
+          <p class="s">Стоимость каждого запроса считается автоматически и видна в аналитике по сотрудникам и отделам.</p>
+        </div>
+        <div class="f">
+          Стоимость, ₽ =<br>
+          &nbsp;&nbsp;<span class="c1">вх. токены</span> / 1000 × <span class="c1">цена вх.</span><br>
+          + <span class="c2">исх. токены</span> / 1000 × <span class="c2">цена исх.</span>
+        </div>
+      </div>
+
+      <div class="card example">
+        <h3>Пример: Claude Opus 5.5</h3>
+        <p class="s">Запрос 2 000 токенов + ответ 1 000 токенов</p>
+        <div class="ex-rows">
+          <div class="ex-row"><span>Вход · 2 × 0,5613 ₽</span><b>1,12 ₽</b></div>
+          <div class="ex-row"><span>Выход · 1 × 2,8064 ₽</span><b>2,81 ₽</b></div>
+          <div class="ex-row"><span>По базовому прайсу</span><span class="strike">8,40 ₽</span></div>
+        </div>
+        <div class="ex-total"><span class="big">3,93 ₽</span><span class="save">−53% для Сбера</span></div>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="ttl">Что ещё входит — без доплат</div>
+      <div class="fgrid">
+        <div class="feat"><div class="ico g"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div><div><div class="n">Соответствие 152-ФЗ</div><div class="d">Обработка данных по закону РФ, роли доступа, логирование</div></div></div>
+        <div class="feat"><div class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></div><div><div class="n">Договор, счёт и ЭДО</div><div class="d">Полный пакет закрывающих документов для бухгалтерии</div></div></div>
+        <div class="feat"><div class="ico g"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></div><div><div class="n">Лимиты и аналитика</div><div class="d">Бюджеты на сотрудника и отдел, расходы в реальном времени</div></div></div>
+        <div class="feat"><div class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9l-4 3 4 3M16 9l4 3-4 3M13.5 6l-3 12"/></svg></div><div><div class="n">Единый API</div><div class="d">Один ключ ко всем моделям для интеграции в ваши системы</div></div></div>
+        <div class="feat"><div class="ico g"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div><div><div class="n">SSO и роли</div><div class="d">SAML, OIDC, Active Directory — вход через корпоративный аккаунт</div></div></div>
+        <div class="feat"><div class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></div><div><div class="n">Без VPN</div><div class="d">200+ моделей доступны из России напрямую, в одном окне</div></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="conf">Конфиденциально · подготовлено для ПАО Сбербанк</span><span>gptunnel.ru · 02</span></div>
+</section>
+
+<!-- ================= PAGE 3 · PRICES A ================= -->
+<section class="page inner-page">
+  <div class="content">
+    <div class="head">
+      <div class="brand"><svg width="26" height="18" style="color:var(--violet)"><use href="#gt-logo"/></svg>GPTunneL <span class="x">×</span><span class="sber-mark"><span class="sber-dot"></span>Сбер</span></div>
+      <div class="meta">Персональное КП · ПАО Сбербанк</div>
+    </div>
+    <div class="price-intro">
+      <div>
+        <span class="tag">● Персональный прайс · 1 / 2</span>
+        <h2>Персональные цены для Сбера</h2>
+      </div>
+      <div class="unit"><div class="a">Тарификация</div><div class="b">₽ за 1 000 токенов</div></div>
+    </div>
+    <div id="vendors-a"></div>
+  </div>
+  <div class="foot"><span class="conf">Конфиденциально · подготовлено для ПАО Сбербанк</span><span>gptunnel.ru · 03</span></div>
+</section>
+
+<!-- ================= PAGE 4 · PRICES B ================= -->
+<section class="page inner-page">
+  <div class="content">
+    <div class="head">
+      <div class="brand"><svg width="26" height="18" style="color:var(--violet)"><use href="#gt-logo"/></svg>GPTunneL <span class="x">×</span><span class="sber-mark"><span class="sber-dot"></span>Сбер</span></div>
+      <div class="meta">Персональное КП · ПАО Сбербанк</div>
+    </div>
+    <div class="price-intro">
+      <div>
+        <span class="tag">● Персональный прайс · 2 / 2</span>
+        <h2>OpenAI и медиа-модели</h2>
+      </div>
+      <div class="unit"><div class="a">Тарификация</div><div class="b">₽ за 1 000 токенов</div></div>
+    </div>
+    <div id="vendors-b"></div>
+    <div class="note"><span class="star">*</span><span>Текстовые модели тарифицируются в рублях за 1 000 токенов (вх. — входящие, исх. — исходящие). Медиа-модели — за одну генерацию: видео 10 секунд в указанном разрешении или одно изображение. Персональные цены действуют для ПАО Сбербанк и рассчитаны исходя из прогнозного объёма потребления около 700 000 ₽ в месяц.</span></div>
+  </div>
+  <div class="foot"><span class="conf">Конфиденциально · подготовлено для ПАО Сбербанк</span><span>gptunnel.ru · 04</span></div>
+</section>
+
+<!-- ================= PAGE 5 · FINAL ================= -->
+<section class="page final">
+  <div class="glow g1"></div><div class="glow g2"></div>
+  <div class="inner">
+    <div class="cover-top">
+      <div class="brand" style="color:#fff">
+        <svg width="30" height="21" style="color:#8B7BFF"><use href="#gt-logo"/></svg>
+        GPTunneL · Business <span class="x">×</span>
+        <span class="sber-mark"><span class="sber-dot"></span>Сбер</span>
+      </div>
+      <span class="pill glass">05</span>
+    </div>
+
+    <h2 style="margin-top:16mm">Не нашли нужную модель?<br><span class="grad-text accent-u">Добавим — со скидкой.</span></h2>
+    <p class="sub">В GPTunneL доступно 200+ моделей: текст, изображения, видео и аудио. Персональный прайс выше — стартовая подборка под задачи Сбера, и мы легко его расширим.</p>
+
+    <div class="custom">
+      <div>
+        <div class="t">Пришлите список моделей, которых не хватает</div>
+        <div class="d">Мы добавим их в ваш персональный прайс и рассчитаем индивидуальные скидки по той же логике — под ваш объём и сценарии использования.</div>
+      </div>
+      <div class="plus">+</div>
+    </div>
+
+    <div class="steps">
+      <div class="step"><div class="no grad-text">01</div><div class="n">Согласование</div><div class="d">Финализируем перечень моделей и персональные цены</div></div>
+      <div class="step"><div class="no grad-text">02</div><div class="n">Договор и ЭДО</div><div class="d">Типовой договор, счёт и закрывающие документы</div></div>
+      <div class="step"><div class="no grad-text">03</div><div class="n">Настройка</div><div class="d">SSO, роли, лимиты бюджета по отделам, API-ключи</div></div>
+      <div class="step"><div class="no grad-text">04</div><div class="n">Запуск</div><div class="d">Команды работают, вы видите аналитику расходов</div></div>
+    </div>
+
+    <div class="terms">
+      <span class="pill glass">0 ₽ за подключение</span>
+      <span class="pill glass">Pay-as-you-go</span>
+      <span class="pill glass">Без лимита на сотрудников</span>
+      <span class="pill glass">Оплата по счёту</span>
+      <span class="pill glass">Персональный менеджер</span>
+    </div>
+
+    <div class="contact">
+      <div class="avatar">ДП</div>
+      <div class="who">
+        <div class="nm">Дмитрий Папуш</div>
+        <div class="role">Head of B2B sales · GPTunneL</div>
+        <div class="cgrid">
+          <a href="tel:+79185994793"><div class="k">Телефон</div><div class="v">+7 918 599-47-93</div></a>
+          <a href="mailto:dp@gptunnel.ai"><div class="k">Почта</div><div class="v">dp@gptunnel.ai</div></a>
+          <a href="https://t.me/dmitrii_pap"><div class="k">Telegram</div><div class="v">@dmitrii_pap</div></a>
+        </div>
+      </div>
+    </div>
+    <div class="final-foot"><span>Персональное предложение для ПАО Сбербанк · не является публичной офертой</span><span>gptunnel.ru</span></div>
+  </div>
+</section>
+
+<script>
+// Источник: «GPTunneL — Калькулятор скидок», 02.10.2026. [имя, id, базовая вх., базовая исх., скидка вх., скидка исх., цена вх., цена исх.]
+const V = {
+  anthropic: { name: 'Anthropic · Claude', badge: 'A', color: '#D97757', rows: [
+    ['Claude Fable 5',   'claude-fable-5',   '2,00', '10,00', 22.3, 22.3, '1,5539', '7,7692'],
+    ['Claude Fable 5.1', 'claude-fable-5-1', '2,00', '10,00', 22.3, 22.3, '1,5539', '7,7692'],
+    ['Claude Opus 5.5',  'claude-opus-5.5',  '1,20', '6,00',  53.2, 53.2, '0,5613', '2,8064'],
+    ['Claude Sonnet 5',  'claude-5-sonnet',  '0,40', '2,00',  21.2, 21.2, '0,3152', '1,5761'],
+    ['Claude Opus 4.8',  'claude-4.8-opus',  '1,50', '7,50',  38.4, 38.4, '0,9245', '4,6225'],
+    ['Claude Opus 4.7',  'claude-4.7-opus',  '1,50', '7,50',  38.2, 38.2, '0,9268', '4,6342'],
+    ['Claude Opus 4.6',  'claude-4.6-opus',  '1,50', '7,50',  39.5, 39.5, '0,9068', '4,5339'],
+    ['Claude Opus 4.5',  'claude-4.5-opus',  '1,50', '7,50',  38.3, 38.3, '0,9251', '4,6253'],
+    ['Claude Haiku 4.5', 'claude-4.5-haiku', '0,20', '1,00',  22.3, 22.3, '0,1554', '0,7769'],
+    ['Claude Haiku 3.5', 'claude-3.5-haiku', '0,20', '1,00',  25.0, 25.0, '0,15',   '0,75'],
+  ]},
+  deepseek: { name: 'DeepSeek', badge: 'D', color: '#4D6BFE', rows: [
+    ['DeepSeek V4.1 Flash', 'deepseek-v4.1-flash', '0,06',  '0,24',  25.0, 25.0, '0,045',  '0,18'],
+    ['DeepSeek V4 Pro',     'deepseek-v4-pro',     '0,23',  '0,68',  10.8, 9.5,  '0,2052', '0,6157'],
+    ['DeepSeek V4 Flash',   'deepseek-v4-flash',   '0,075', '0,225', 45.7, 45.0, '0,0407', '0,1237'],
+  ]},
+  openai: { name: 'OpenAI · GPT', badge: 'O', color: '#0E0E1A', rows: [
+    ['GPT 6 Astra',   'gpt-6-astra',   '2,00', '10,00', 37.9, 37.9, '1,2412', '6,2058'],
+    ['GPT 6 Sol',     'gpt-6-sol',     '1,00', '6,00',  50.4, 54.4, '0,4959', '2,7389'],
+    ['GPT 6 Luna',    'gpt-6-luna',    '0,04', '0,24',  46.5, 49.6, '0,0214', '0,1209'],
+    ['GPT 5.6 Sol',   'gpt-5.6-sol',   '1,00', '6,00',  47.7, 49.4, '0,5234', '3,038'],
+    ['GPT 5.6 Terra', 'gpt-5.6-terra', '0,40', '2,40',  40.3, 40.3, '0,2387', '1,432'],
+    ['GPT 5.6 Luna',  'gpt-5.6-luna',  '0,04', '0,24',  38.7, 38.7, '0,0245', '0,147'],
+    ['GPT 5.5 Pro',   'gpt-5.5-pro',   '6,00', '36,00', 18.4, 18.4, '4,8946', '29,3678'],
+    ['GPT 5.5',       'gpt-5.5',       '1,00', '6,00',  41.0, 41.0, '0,5904', '3,5425'],
+    ['GPT 5.3 Codex', 'gpt-5.3-codex', '0,37', '3,00',  22.8, 23.9, '0,2855', '2,2842'],
+  ]},
+  perplexity: { name: 'Perplexity · Sonar', badge: 'P', color: '#1FB8CD', rows: [
+    ['Sonar Pro',           'perplexity-sonar-pro',           '0,90', '4,50', 38.6, 38.6, '0,5527', '2,7637'],
+    ['Sonar Deep Research', 'perplexity-sonar-deep-research', '0,60', '2,70', 38.6, 40.0, '0,3685', '1,6191'],
+    ['Sonar',               'perplexity-sonar',               '0,30', '0,30', 38.6, 38.6, '0,1842', '0,1842'],
+  ]},
+};
+// [имя, id, формат, базовая цена, скидка, ваша цена] — за одну генерацию
+const MEDIA = { name: 'Видео и изображения', badge: '▶', color: '#6C5CFF', rows: [
+  ['Kling v3',            'kling-v3-720P-10s',       'видео 720p · 10 с',  '336,00', 0,    '336,00'],
+  ['Kling v2.6',          'kling-v2-6-1080P-10s',    'видео 1080p · 10 с', '142,00', 34.5, '93,00'],
+  ['Nano Banana 2 · 4K',  'nano-banana-2-gemini-4k', 'изображение 4K',     '32,00',  25.0, '24,00'],
+  ['Nano Banana 2',       'nano-banana-2',           'изображение',        '16,00',  52.5, '7,6032'],
+]};
+
+const pct = n => n.toFixed(1).replace('.', ',') + '%';
+const bar = (d, extra='') => `<div class="dbar"><div class="track"><div class="fill" style="width:${Math.min(d/55*100,100)}%"></div></div><span class="pct ${d ? '' : 'zero'}">${d ? '−' + pct(d) : '—'}</span></div>${extra}`;
+
+function vendorHtml(v) {
+  const max = Math.max(...v.rows.flatMap(r => [r[4], r[5]]));
+  const rows = v.rows.map(r => {
+    const [nm, id, bi, bo, di, dout, yi, yo] = r;
+    const same = di === dout;
+    const disc = same ? bar(di) : bar(Math.max(di, dout), `<span class="dsplit">вх. −${pct(di)} · исх. −${pct(dout)}</span>`);
+    return `<tr>
+      <td class="m"><div class="mn">${nm}</div><div class="id">${id}</div></td>
+      <td class="base"><div class="pair"><span class="lb">вх.</span><span class="vl">${bi}</span><span class="lb">исх.</span><span class="vl">${bo}</span></div></td>
+      <td class="disc">${disc}</td>
+      <td class="you"><div class="pair"><span class="lb">вх.</span><span class="vl">${yi}</span><span class="lb">исх.</span><span class="vl">${yo}</span></div></td>
+    </tr>`;
+  }).join('');
+  return `<div class="vendor">
+    <div class="vendor-h"><div class="nm"><span class="badge" style="background:${v.color}">${v.badge}</span>${v.name}</div>
+      <div><span class="cnt">${v.rows.length} ${plural(v.rows.length)}</span><span class="mx">до −${pct(max)}</span></div></div>
+    <table><thead><tr><th>Модель</th><th>Базовая цена, ₽</th><th>Скидка</th><th class="you">Цена для Сбера, ₽</th></tr></thead>
+    <tbody>${rows}</tbody></table></div>`;
+}
+function mediaHtml(v) {
+  const max = Math.max(...v.rows.map(r => r[4]));
+  const rows = v.rows.map(([nm, id, fmt, base, d, you]) => `<tr>
+      <td class="m"><div class="mn">${nm}</div><div class="id">${id}</div></td>
+      <td class="unit-c">${fmt}</td>
+      <td class="base"><span class="pair"><span class="vl">${base}</span></span></td>
+      <td class="disc">${bar(d)}</td>
+      <td class="you"><span class="pair"><span class="vl">${you}</span></span></td>
+    </tr>`).join('');
+  return `<div class="vendor">
+    <div class="vendor-h"><div class="nm"><span class="badge" style="background:${v.color}">${v.badge}</span>${v.name}</div>
+      <div><span class="cnt">₽ за генерацию</span><span class="mx">до −${pct(max)}</span></div></div>
+    <table><thead><tr><th>Модель</th><th>Формат</th><th>Базовая, ₽</th><th>Скидка</th><th class="you">Для Сбера, ₽</th></tr></thead>
+    <tbody>${rows}</tbody></table></div>`;
+}
+function plural(n) { const m10 = n % 10, m100 = n % 100; if (m10 === 1 && m100 !== 11) return 'модель'; if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return 'модели'; return 'моделей'; }
+
+document.getElementById('vendors-a').innerHTML = vendorHtml(V.anthropic) + vendorHtml(V.deepseek) + vendorHtml(V.perplexity);
+document.getElementById('vendors-b').innerHTML = vendorHtml(V.openai) + mediaHtml(MEDIA);
+</script>
+</body>
+</html>
